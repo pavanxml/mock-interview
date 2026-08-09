@@ -66,3 +66,4 @@ FRONTEND_ORIGIN=http://localhost:4028
 ## Current backend status
 
 The backend is a compile-ready Spring Boot scaffold with controller contracts and a real PostgreSQL schema. The next implementation step is replacing demo controller responses with JPA services, JWT authentication, payment webhook verification, and object storage for uploaded resumes/documents.
+<!-- Deploy trigger: remove third-party rocket-web script -->
