@@ -14,7 +14,7 @@ interface InterviewerLoginFormProps {
   onSwitchToRegister: () => void;
 }
 
-const API_BASE = '/api/v1';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://mock-interview-khcb.onrender.com/api/v1';
 
 export default function InterviewerLoginForm({ onSwitchToRegister }: InterviewerLoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);

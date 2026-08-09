@@ -20,7 +20,7 @@ type TopInterviewer = { name: string; company: string; designation: string; tech
 type Audit = { time: string; actor: string; action: string; target: string; risk: string };
 type Overview = { metrics: Metrics; pendingInterviewers: PendingInterviewer[]; withdrawals: Withdrawal[]; students: Student[]; bookings: Booking[]; technologies: Technology[]; reviews: Review[]; complaints: Complaint[]; payments: Payment[]; topInterviewers: TopInterviewer[]; audits: Audit[] };
 
-const API_BASE = '/api/v1';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://mock-interview-khcb.onrender.com/api/v1';
 const ADMIN_ID = 'Arjun Mehta';
 
 function formatMoney(value: number) {
