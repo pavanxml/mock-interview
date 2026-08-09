@@ -1,0 +1,29 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+
+spring:
+  application:
+    name: interviewhub-api
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/interviewhub}
+    username: ${DATABASE_USERNAME:interviewhub}
+    password: ${DATABASE_PASSWORD:interviewhub}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+app:
+  frontend-origin: ${FRONTEND_ORIGIN:http://localhost:4028}
+  payments:
+    provider: ${PAYMENT_PROVIDER:razorpay}
+  storage:
+    resume-bucket: ${RESUME_BUCKET:interviewhub-resumes}
