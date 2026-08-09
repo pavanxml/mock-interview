@@ -41,12 +41,15 @@
   "scripts": {
     "dev": "next dev -p 4028",
     "build": "next build",
-    "start": "next dev -p 4028",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-10000}",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,md,json}\"",
-    "serve": "next start",
+    "serve": "next start -H 0.0.0.0 -p ${PORT:-10000}",
     "type-check": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.15",

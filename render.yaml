@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: mock-interview
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=460
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://mock-interview-khcb.onrender.com
