@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { workflowStore } from '@/lib/mockWorkflowStore';
 
 export async function POST(request: Request) {
   try {
@@ -9,17 +10,21 @@ export async function POST(request: Request) {
 
     let authResult;
     if (userRole === 'INTERVIEWER') {
+      const application = workflowStore.applications.find((item) => item.email === userEmail);
+      if (application && application.status !== 'approved') {
+        return NextResponse.json({ success: false, message: 'Your interviewer application is still awaiting admin approval.' }, { status: 403 });
+      }
       authResult = {
-        userId: 'int_101',
+        userId: application?.id || 'int_101',
         email: userEmail,
         role: 'INTERVIEWER',
         accessToken: 'demo-access-token-' + Date.now(),
         tokenType: 'Bearer',
         expiresInSeconds: 3600,
-        fullName: 'Arjun Mehta',
-        designation: 'Staff Engineer',
-        company: 'Google',
-        expertise: ['System Design', 'Java', 'Distributed Systems'],
+        fullName: application?.fullName || 'Arjun Mehta',
+        designation: application?.currentDesignation || 'Staff Engineer',
+        company: application?.currentCompany || 'Google',
+        expertise: application?.expertise || ['System Design', 'Java', 'Distributed Systems'],
         phone: '9876543210',
         graduationYear: '2018',
       };

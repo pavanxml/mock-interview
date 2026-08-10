@@ -51,11 +51,8 @@ export default function InterviewerLoginForm({ onSwitchToRegister }: Interviewer
       window.localStorage.setItem('interviewhub_auth', JSON.stringify(body.data));
       toast.success('Welcome back, ' + (body.data?.fullName || 'Interviewer') + '!');
       window.location.href = '/interviewer-portal';
-    } catch {
-      const demoInterviewer = { userId: 'int_101', email: data.email, role: 'INTERVIEWER', fullName: 'Arjun Mehta', designation: 'Staff Engineer', company: 'Google', expertise: ['System Design', 'Java'] };
-      window.localStorage.setItem('interviewhub_auth', JSON.stringify(demoInterviewer));
-      toast.success('Welcome back, Arjun Mehta!');
-      window.location.href = '/interviewer-portal';
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to sign in. Please check your interviewer credentials.');
     } finally {
       setIsLoading(false);
     }

@@ -1,16 +1,35 @@
 import { NextResponse } from 'next/server';
+import { workflowStore } from '@/lib/mockWorkflowStore';
 
 export async function GET() {
+  const registeredApplications = workflowStore.applications
+    .filter((application) => application.status === 'pending')
+    .map((application) => ({
+      id: application.id,
+      name: application.fullName,
+      email: application.email,
+      company: application.currentCompany,
+      designation: application.currentDesignation,
+      experience: 'Submitted application',
+      linkedinUrl: 'https://linkedin.com',
+      expertise: application.expertise,
+      linkedinVerified: false,
+      resumeUploaded: true,
+      idCardUploaded: false,
+      submittedAt: new Date().toISOString(),
+      waitHours: 0,
+    }));
   const overview = {
     metrics: {
       students: 18450,
       interviewers: 2420,
       bookingsThisMonth: 1260,
       revenueThisMonth: 630000,
-      pendingApprovals: 14,
+      pendingApprovals: 14 + registeredApplications.length,
       pendingWithdrawals: 8,
     },
     pendingInterviewers: [
+      ...registeredApplications,
       {
         id: 'int_p1',
         name: 'Siddharth Rao',

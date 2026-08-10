@@ -418,7 +418,7 @@ export default function InterviewerPortalContent({ initialActiveTab = 'dashboard
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div>
                             <label className="text-xs text-muted-foreground mb-1 block">Confirm Date</label>
-                            <input type="date" className="input-field text-sm" defaultValue="2026-07-20" />
+                            <input type="date" className="input-field text-sm" defaultValue={req.preferredDate} />
                           </div>
                           <div>
                             <label className="text-xs text-muted-foreground mb-1 block">Confirm Time</label>

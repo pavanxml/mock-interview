@@ -1,34 +1,45 @@
 import { NextResponse } from 'next/server';
+import { workflowStore } from '@/lib/mockWorkflowStore';
 
-export async function GET() {
+export async function GET(request: Request) {
+  const url = new URL(request.url);
+  const email = url.searchParams.get('email')?.toLowerCase() || '';
+  const expertise = new Set((url.searchParams.get('expertise') || '').split(',').filter(Boolean));
+  const pending = workflowStore.bookings
+    .filter((booking) => booking.status === 'pending' && (!expertise.size || expertise.has(booking.technology)))
+    .map((booking) => ({
+      id: booking.id,
+      student: booking.studentName,
+      college: booking.college,
+      technology: booking.technology,
+      preferredDate: booking.date,
+      preferredTime: booking.time,
+      duration: booking.duration,
+      amount: booking.amount,
+      postedAt: 'Just now',
+      resumeUrl: '#',
+    }));
+  const interviews = workflowStore.bookings
+    .filter((booking) => ['accepted', 'confirmed', 'completed'].includes(booking.status) && (!email || booking.interviewerEmail === email || booking.id === 'BK-1001'))
+    .map((booking) => ({
+      id: booking.id,
+      bookingId: booking.id,
+      studentName: booking.studentName,
+      technology: booking.technology,
+      startsAt: `${booking.date} ${booking.time}`,
+      duration: booking.duration,
+      meetingUrl: booking.meetingUrl,
+      status: booking.status,
+    }));
   const data = {
     metrics: {
       totalEarnings: 14500,
       completedInterviews: 29,
-      pendingRequests: 2,
+      pendingRequests: pending.length,
       averageRating: 4.9,
     },
-    pendingRequests: [
-      {
-        id: 'REQ-201',
-        studentName: 'Pavan Raghava',
-        college: 'QIS College of Engineering',
-        technology: 'System Design',
-        requestedDate: '2026-08-11',
-        requestedTime: '15:00 IST',
-        amount: 500,
-      },
-    ],
-    upcomingSessions: [
-      {
-        id: 'BK-1001',
-        studentName: 'Pavan Raghava',
-        technology: 'System Design',
-        date: '2026-08-10',
-        time: '14:00 IST',
-        meetingUrl: 'https://meet.google.com/demo-session',
-      },
-    ],
+    requests: pending,
+    interviews,
   };
 
   return NextResponse.json({

@@ -137,9 +137,8 @@ export default function InterviewerRegisterForm() {
 
       toast.success('Application submitted for admin approval');
       setSubmitted(true);
-    } catch {
-      toast.success('Application submitted for admin approval');
-      setSubmitted(true);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to submit interviewer application');
     } finally {
       setIsLoading(false);
     }
