@@ -12,3 +12,5 @@ services:
         value: prod
       - key: FRONTEND_ORIGIN
         value: https://mock-interviews1.vercel.app
+      - key: DB_SCHEMA
+        value: interviewhub

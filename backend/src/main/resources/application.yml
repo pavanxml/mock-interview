@@ -7,7 +7,7 @@ spring:
   application:
     name: interviewhub-api
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/interviewhub}
+    url: ${SPRING_DATASOURCE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/interviewhub}}
     username: ${DATABASE_USERNAME:interviewhub}
     password: ${DATABASE_PASSWORD:interviewhub}
   jpa:
@@ -16,10 +16,14 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: ${DB_SCHEMA:interviewhub}
     open-in-view: false
   flyway:
     enabled: true
     locations: classpath:db/migration
+    default-schema: ${DB_SCHEMA:interviewhub}
+    schemas: ${DB_SCHEMA:interviewhub}
+    create-schemas: true
 
 app:
   frontend-origin: ${FRONTEND_ORIGIN:http://localhost:4028}
