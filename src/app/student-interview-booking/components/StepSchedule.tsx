@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BookingState } from './BookingWizard';
 import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, AlertTriangle, Info } from 'lucide-react';
 
@@ -11,19 +11,23 @@ interface StepScheduleProps {
   onBack: () => void;
 }
 
-// Generate next 14 days from today
-function getNext14Days(): { date: string; dayLabel: string; dateLabel: string; monthLabel: string; isToday: boolean; isWeekend: boolean }[] {
+function getIstDateKey() {
   const todayParts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Asia/Kolkata',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   }).formatToParts(new Date());
-  const today = new Date(
-    Number(todayParts.find((part) => part.type === 'year')?.value),
-    Number(todayParts.find((part) => part.type === 'month')?.value) - 1,
-    Number(todayParts.find((part) => part.type === 'day')?.value),
-  );
+  return todayParts
+    .filter((part) => ['year', 'month', 'day'].includes(part.type))
+    .map((part) => part.value)
+    .join('-');
+}
+
+// Generate next 14 days from the current IST date.
+function getNext14Days(todayKey: string): { date: string; dayLabel: string; dateLabel: string; monthLabel: string; isToday: boolean; isWeekend: boolean }[] {
+  const [year, month, day] = todayKey.split('-').map(Number);
+  const today = new Date(year, month - 1, day);
   const days = [];
   for (let i = 1; i <= 14; i++) {
     const d = new Date(today);
@@ -45,9 +49,18 @@ function getNext14Days(): { date: string; dayLabel: string; dateLabel: string; m
 const ALL_SLOTS = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
 export default function StepSchedule({ booking, updateBooking, onNext, onBack }: StepScheduleProps) {
-  const days = getNext14Days();
+  const [calendarDay, setCalendarDay] = useState(getIstDateKey);
   const [calendarOffset, setCalendarOffset] = useState(0);
   const [error, setError] = useState('');
+  useEffect(() => {
+    const refreshCalendar = window.setInterval(() => {
+      const currentDay = getIstDateKey();
+      setCalendarDay((previousDay) => (previousDay === currentDay ? previousDay : currentDay));
+    }, 60_000);
+    return () => window.clearInterval(refreshCalendar);
+  }, []);
+
+  const days = getNext14Days(calendarDay);
   const visibleDays = days.slice(calendarOffset, calendarOffset + 7);
 
   const getSlotsForDate = (date: string) => {
