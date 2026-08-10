@@ -67,6 +67,7 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
     const [collapsed, setCollapsed] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [pendingApprovals, setPendingApprovals] = useState<number | null>(null);
+    const [adminProfile, setAdminProfile] = useState({ fullName: 'Admin User', designation: 'Administrator' });
 
     useEffect(() => {
         let active = true;
@@ -78,6 +79,10 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
                     active = false;
                 };
             }
+            setAdminProfile({
+                fullName: auth.fullName || auth.email?.split('@')[0] || 'Admin User',
+                designation: auth.designation || 'Administrator',
+            });
         } catch {
             logoutToSignIn();
             return () => {
@@ -173,11 +178,11 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
                 {!collapsed ? (
                     <div className="flex items-center gap-3">
                         <div className="w-9 h-9 rounded-xl gradient-primary flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-                            A
+                            {adminProfile.fullName.trim().charAt(0).toUpperCase() || 'A'}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-600 text-foreground truncate">Arjun Mehta</p>
-                            <p className="text-xs text-muted-foreground truncate">Super Admin</p>
+                            <p className="text-sm font-600 text-foreground truncate">{adminProfile.fullName}</p>
+                            <p className="text-xs text-muted-foreground truncate">{adminProfile.designation}</p>
                         </div>
                         <button type="button" onClick={logoutToSignIn} className="text-muted-foreground hover:text-danger transition-colors" title="Sign out" aria-label="Sign out">
                             <LogOut size={16} />
@@ -193,10 +198,10 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
     );
 
     return (
-        <div className="flex h-screen bg-background overflow-hidden">
+            <div className="flex h-screen overflow-hidden bg-slate-50/90 dark:bg-slate-950">
             {/* Desktop Sidebar */}
             <aside
-                className={`hidden lg:flex flex-col glass-panel border-r border-border flex-shrink-0 transition-all duration-300 ease-in-out ${collapsed ? 'w-16' : 'w-60'
+                className={`hidden lg:flex flex-col bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-r border-slate-200/80 dark:border-slate-800 shadow-[8px_0_30px_rgba(15,23,42,0.04)] flex-shrink-0 transition-all duration-300 ease-in-out ${collapsed ? 'w-16' : 'w-60'
                     }`}
             >
                 <SidebarContent />
@@ -250,7 +255,7 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
             {/* Main content */}
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
                 {/* Topbar */}
-                <header className="glass-panel border-b border-border h-16 flex items-center justify-between px-6 flex-shrink-0 z-20">
+                <header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 h-16 flex items-center justify-between px-4 sm:px-6 flex-shrink-0 z-20 shadow-sm">
                     <div className="flex items-center gap-3">
                         <button
                             onClick={() => setMobileOpen(true)}
@@ -296,7 +301,7 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
                 </header>
 
                 {/* Page content */}
-                <main className="flex-1 overflow-y-auto scrollbar-thin bg-transparent">
+                <main className="flex-1 overflow-y-auto scrollbar-thin bg-[radial-gradient(circle_at_top_right,rgba(79,70,229,0.08),transparent_32%),transparent]">
                     <div className="w-full p-4 sm:p-5 lg:p-6">
                         {children}
                     </div>

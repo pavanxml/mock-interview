@@ -52,6 +52,8 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
     } catch {}
   }, []);
 
+  const profileInitial = profile.fullName.trim().charAt(0).toUpperCase() || 'I';
+
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       <div className={`flex items-center gap-3 px-4 py-4 border-b border-border ${collapsed ? 'justify-center' : ''}`}>
@@ -105,7 +107,7 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
       <div className={`border-t border-border p-4 ${collapsed ? 'flex justify-center' : ''}`}>
         {!collapsed ? (
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">R</div>
+            <div className="w-9 h-9 rounded-xl bg-amber-500 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">{profileInitial}</div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-600 text-foreground truncate">{profile.fullName}</p>
               <p className="text-xs text-muted-foreground truncate">{profile.designation} - {profile.company}</p>
@@ -122,8 +124,8 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
   );
 
   return (
-    <div className="flex h-screen bg-background overflow-hidden">
-      <aside className={`hidden lg:flex flex-col glass-panel border-r border-border flex-shrink-0 transition-all duration-300 ease-in-out ${collapsed ? 'w-16' : 'w-60'}`}>
+    <div className="flex h-screen overflow-hidden bg-slate-50/90 dark:bg-slate-950">
+      <aside className={`hidden lg:flex flex-col bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-r border-slate-200/80 dark:border-slate-800 shadow-[8px_0_30px_rgba(15,23,42,0.04)] flex-shrink-0 transition-all duration-300 ease-in-out ${collapsed ? 'w-16' : 'w-60'}`}>
         <SidebarContent />
       </aside>
 
@@ -163,7 +165,7 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
       )}
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <header className="glass-panel border-b border-border h-16 flex items-center justify-between px-6 flex-shrink-0 z-20">
+        <header className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800 h-16 flex items-center justify-between px-4 sm:px-6 flex-shrink-0 z-20 shadow-sm">
           <div className="flex items-center gap-3">
             <button onClick={() => setMobileOpen(true)} className="lg:hidden p-2 rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">
               <Menu size={20} />
@@ -173,7 +175,7 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
             </button>
             <div>
               <h1 className="text-base font-700 text-foreground">Interviewer Portal</h1>
-              <p className="text-xs text-muted-foreground">Welcome back, {profile.fullName.split(' ')[0]}</p>
+              <p className="text-xs text-muted-foreground">Welcome back, {profile.fullName.split(' ')[0]} <span className="hidden sm:inline">· Professional workspace</span></p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -185,7 +187,7 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
             <NotificationBell audience="interviewer" />
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto scrollbar-thin bg-transparent">
+        <main className="flex-1 overflow-y-auto scrollbar-thin bg-[radial-gradient(circle_at_top_right,rgba(245,158,11,0.08),transparent_32%),transparent]">
           {children}
         </main>
       </div>
