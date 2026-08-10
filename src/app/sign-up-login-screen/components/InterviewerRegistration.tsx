@@ -33,7 +33,7 @@ const TECH_OPTIONS = [
 ];
 
 const AVAIL_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const API_BASE = '/api/v1';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '/api/v1';
 
 const AVAIL_TIMES = [
   '6:00 AM-8:00 AM', '8:00 AM-10:00 AM', '10:00 AM-12:00 PM',

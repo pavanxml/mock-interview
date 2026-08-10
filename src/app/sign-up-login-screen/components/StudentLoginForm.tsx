@@ -6,7 +6,7 @@ import { Eye, EyeOff, Mail, Lock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 
-const API_BASE = '/api/v1';
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '/api/v1';
 
 interface StudentLoginFormProps {
   onSwitchToRegister: () => void;
