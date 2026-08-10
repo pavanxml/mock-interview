@@ -13,7 +13,17 @@ interface StepScheduleProps {
 
 // Generate next 14 days from today
 function getNext14Days(): { date: string; dayLabel: string; dateLabel: string; monthLabel: string; isToday: boolean; isWeekend: boolean }[] {
-  const today = new Date(2026, 6, 13); // Using provided timestamp: 2026-07-13
+  const todayParts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Kolkata',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(new Date());
+  const today = new Date(
+    Number(todayParts.find((part) => part.type === 'year')?.value),
+    Number(todayParts.find((part) => part.type === 'month')?.value) - 1,
+    Number(todayParts.find((part) => part.type === 'day')?.value),
+  );
   const days = [];
   for (let i = 1; i <= 14; i++) {
     const d = new Date(today);
@@ -32,15 +42,6 @@ function getNext14Days(): { date: string; dayLabel: string; dateLabel: string; m
   return days;
 }
 
-// Mock slot availability per date
-const SLOT_DATA: Record<string, Record<string, 'available' | 'booked'>> = {
-  '2026-07-14': { '8:00 AM': 'available', '9:00 AM': 'booked', '10:00 AM': 'available', '11:00 AM': 'available', '2:00 PM': 'booked', '3:00 PM': 'available', '4:00 PM': 'available', '6:00 PM': 'available', '7:00 PM': 'booked', '8:00 PM': 'available' },
-  '2026-07-15': { '9:00 AM': 'available', '10:00 AM': 'available', '11:00 AM': 'booked', '2:00 PM': 'available', '3:00 PM': 'available', '5:00 PM': 'booked', '6:00 PM': 'available', '7:00 PM': 'available' },
-  '2026-07-16': { '8:00 AM': 'booked', '10:00 AM': 'available', '11:00 AM': 'available', '1:00 PM': 'available', '3:00 PM': 'booked', '4:00 PM': 'available', '6:00 PM': 'available', '8:00 PM': 'available' },
-  '2026-07-17': { '9:00 AM': 'available', '10:00 AM': 'booked', '11:00 AM': 'available', '2:00 PM': 'available', '4:00 PM': 'available', '6:00 PM': 'booked', '7:00 PM': 'available' },
-  '2026-07-18': { '8:00 AM': 'available', '9:00 AM': 'available', '10:00 AM': 'available', '11:00 AM': 'booked', '1:00 PM': 'available', '2:00 PM': 'available', '3:00 PM': 'booked', '5:00 PM': 'available', '7:00 PM': 'available' },
-};
-
 const ALL_SLOTS = ['8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM'];
 
 export default function StepSchedule({ booking, updateBooking, onNext, onBack }: StepScheduleProps) {
@@ -50,10 +51,10 @@ export default function StepSchedule({ booking, updateBooking, onNext, onBack }:
   const visibleDays = days.slice(calendarOffset, calendarOffset + 7);
 
   const getSlotsForDate = (date: string) => {
-    const data = SLOT_DATA[date] || {};
+    const daySeed = date.split('-').reduce((total, part) => total + Number(part), 0);
     return ALL_SLOTS.map((slot) => ({
       time: slot,
-      status: (data[slot] || (Math.random() > 0.4 ? 'available' : 'booked')) as 'available' | 'booked',
+      status: ((daySeed + ALL_SLOTS.indexOf(slot) * 7) % 5 === 0 ? 'booked' : 'available') as 'available' | 'booked',
     }));
   };
 
@@ -124,7 +125,7 @@ export default function StepSchedule({ booking, updateBooking, onNext, onBack }:
         <div className="grid grid-cols-7 gap-2">
           {visibleDays.map((day) => {
             const isSelected = booking.selectedDate === day.date;
-            const hasSlots = SLOT_DATA[day.date] !== undefined;
+            const hasSlots = true;
             return (
               <button
                 key={`day-${day.date}`}
