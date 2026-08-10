@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     if (!existing) workflowStore.applications.push(application);
 
     const authResult = {
-      userId: 'int_' + Math.random().toString(36).substring(2, 9),
+      userId: application.id,
           email: normalizedEmail || 'interviewer@example.com',
       role: 'INTERVIEWER_PENDING',
       accessToken: 'demo-access-token-' + Date.now(),
