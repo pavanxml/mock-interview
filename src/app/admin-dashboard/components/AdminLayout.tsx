@@ -70,6 +70,20 @@ export default function AdminLayout({ children, activePage }: AdminLayoutProps) 
 
     useEffect(() => {
         let active = true;
+        try {
+            const auth = JSON.parse(window.localStorage.getItem('interviewhub_auth') || '{}');
+            if (auth.role !== 'ADMIN') {
+                logoutToSignIn();
+                return () => {
+                    active = false;
+                };
+            }
+        } catch {
+            logoutToSignIn();
+            return () => {
+                active = false;
+            };
+        }
         const loadCounts = async () => {
             try {
                 const response = await fetch(`${API_BASE}/admin/overview`, { cache: 'no-store' });

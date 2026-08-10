@@ -41,6 +41,11 @@ export default function StudentLayout({ children, activePage }: StudentLayoutPro
       auth = JSON.parse(window.localStorage.getItem('interviewhub_auth') || '{}');
     } catch {}
 
+    if (auth.role !== 'STUDENT') {
+      logoutToSignIn();
+      return;
+    }
+
     const nextProfile = {
       fullName: auth.fullName || auth.email?.split('@')[0] || 'Student',
       college: auth.company || auth.college || 'Student Portal',

@@ -35,8 +35,15 @@ export default function InterviewerLayout({ children, activePage }: InterviewerL
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem('interviewhub_auth');
-      if (!raw) return;
+      if (!raw) {
+        logoutToSignIn();
+        return;
+      }
       const auth = JSON.parse(raw);
+      if (auth.role !== 'INTERVIEWER') {
+        logoutToSignIn();
+        return;
+      }
       setProfile({
         fullName: auth.fullName || auth.email?.split('@')[0] || 'Interviewer',
         designation: auth.designation || 'Interviewer',

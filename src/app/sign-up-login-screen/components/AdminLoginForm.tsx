@@ -40,6 +40,17 @@ export default function AdminLoginForm() {
       return;
     }
     toast.success('Welcome, Admin!');
+    window.localStorage.setItem(
+      'interviewhub_auth',
+      JSON.stringify({
+        userId: 'admin_1',
+        email: ADMIN_DEMO.email,
+        role: 'ADMIN',
+        fullName: 'Admin User',
+        designation: 'Administrator',
+        company: 'MockInterview',
+      }),
+    );
     setIsLoading(false);
     window.location.href = '/admin-dashboard';
   };
