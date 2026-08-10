@@ -6,8 +6,8 @@ services:
     plan: free
     healthCheckPath: /api/v1/marketplace/technologies
     envVars:
-      - key: PORT
-        value: "8080"
+        - key: PORT
+          value: "10000"
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: FRONTEND_ORIGIN

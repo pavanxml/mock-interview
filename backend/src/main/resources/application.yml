@@ -1,7 +1,7 @@
 server:
   # Render's managed PORT variable is currently being passed through as a
   # literal placeholder. Keep the service bound to the Docker-exposed port.
-  port: 8080
+  port: 10000
   error:
     include-message: always
 
