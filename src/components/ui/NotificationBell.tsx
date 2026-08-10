@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Bell, Check, Trash2 } from 'lucide-react';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '/api/v1';
+const API_BASE = '/api/v1';
 
 type NotificationItem = {
   id: string;
