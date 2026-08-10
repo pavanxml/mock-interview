@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { workflowStore } from '@/lib/mockWorkflowStore';
 
 interface BookingRequest {
   bookingId?: string;
@@ -27,11 +26,8 @@ export async function POST(request: Request) {
     const booking = {
       id: bookingId,
       studentEmail: body.studentEmail || '',
-      studentName: body.studentName || 'Student',
-      college: body.college || 'Student profile',
       technology: body.technology || 'Mock Interview',
       interviewerName: 'Pending interviewer',
-      interviewerEmail: '',
       interviewerCompany: 'InterviewHub',
       interviewerRole: 'Awaiting acceptance',
       date,
@@ -41,7 +37,6 @@ export async function POST(request: Request) {
       status: 'pending',
       amount: Number.isFinite(amount) ? amount : 0,
     };
-    workflowStore.bookings.push(booking);
 
     return NextResponse.json(
       { success: true, data: booking, message: 'Booking request sent to interviewers.' },

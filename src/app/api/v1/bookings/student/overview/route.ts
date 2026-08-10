@@ -1,22 +1,6 @@
 import { NextResponse } from 'next/server';
-import { workflowStore } from '@/lib/mockWorkflowStore';
 
-export async function GET(request: Request) {
-  const email = new URL(request.url).searchParams.get('email')?.toLowerCase() || '';
-  const liveBookings = workflowStore.bookings
-    .filter((booking) => !email || booking.studentEmail.toLowerCase() === email)
-    .map((booking) => ({
-      id: booking.id,
-      interviewerName: booking.interviewerName,
-      interviewerCompany: booking.interviewerCompany,
-      interviewerRole: booking.interviewerRole,
-      technology: booking.technology,
-      date: booking.date,
-      time: booking.time,
-      status: booking.status.toUpperCase(),
-      meetingUrl: booking.meetingUrl,
-      amount: booking.amount,
-    }));
+export async function GET() {
   const data = {
     metrics: {
       totalBookings: 3,
@@ -24,7 +8,7 @@ export async function GET(request: Request) {
       completedSessions: 2,
       feedbackReports: 2,
     },
-    upcoming: liveBookings.length > 0 ? liveBookings : [
+    upcoming: [
       {
         id: 'BK-1001',
         interviewerName: 'Arjun Mehta',
@@ -37,7 +21,7 @@ export async function GET(request: Request) {
         meetingUrl: 'https://meet.google.com/demo-session',
       },
     ],
-    past: liveBookings.length > 0 ? [] : [
+    past: [
       {
         id: 'BK-0998',
         interviewerName: 'Priya Sharma',
