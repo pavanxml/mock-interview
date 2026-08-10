@@ -24,13 +24,13 @@ export default function BookingTopbar({ currentStep }: BookingTopbarProps) {
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link href="/student-dashboard?tab=upcoming" className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors">
             <FileText size={16} />
             <span className="hidden sm:block">My Bookings</span>
-          </button>
-          <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center">
+          </Link>
+          <Link href="/student-dashboard?tab=profile" aria-label="Open profile" className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center">
             <User size={16} className="text-white" />
-          </div>
+          </Link>
         </div>
       </div>
     </header>
