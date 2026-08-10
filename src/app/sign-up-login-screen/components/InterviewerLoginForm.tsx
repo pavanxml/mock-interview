@@ -14,7 +14,7 @@ interface InterviewerLoginFormProps {
   onSwitchToRegister: () => void;
 }
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 export default function InterviewerLoginForm({ onSwitchToRegister }: InterviewerLoginFormProps) {
   const [showPassword, setShowPassword] = useState(false);

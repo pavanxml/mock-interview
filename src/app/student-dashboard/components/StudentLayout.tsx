@@ -14,7 +14,7 @@ interface StudentLayoutProps {
   activePage: string;
 }
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 const NAV_ITEMS = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, href: '/student-dashboard' },

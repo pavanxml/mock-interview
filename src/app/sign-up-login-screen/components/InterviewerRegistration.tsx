@@ -33,7 +33,7 @@ const TECH_OPTIONS = [
 ];
 
 const AVAIL_DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 const AVAIL_TIMES = [
   '6:00 AM-8:00 AM', '8:00 AM-10:00 AM', '10:00 AM-12:00 PM',

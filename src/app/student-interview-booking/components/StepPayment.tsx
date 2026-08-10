@@ -13,7 +13,7 @@ interface StepPaymentProps {
 
 type PaymentMethod = 'upi' | 'phonepay' | 'googlepay' | 'paytm' | 'card';
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 const PAYMENT_METHODS: { id: PaymentMethod; label: string; icon: string; desc: string }[] = [
   { id: 'upi', label: 'UPI', icon: 'UPI', desc: 'Any UPI app' },

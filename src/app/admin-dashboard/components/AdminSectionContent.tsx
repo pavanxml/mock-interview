@@ -20,7 +20,7 @@ type TopInterviewer = { name: string; company: string; designation: string; tech
 type Audit = { time: string; actor: string; action: string; target: string; risk: string };
 type Overview = { metrics: Metrics; pendingInterviewers: PendingInterviewer[]; withdrawals: Withdrawal[]; students: Student[]; bookings: Booking[]; technologies: Technology[]; reviews: Review[]; complaints: Complaint[]; payments: Payment[]; topInterviewers: TopInterviewer[]; audits: Audit[] };
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 const ADMIN_ID = 'Arjun Mehta';
 
 function formatMoney(value: number) {

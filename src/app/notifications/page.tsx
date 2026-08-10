@@ -5,7 +5,7 @@ import Link from 'next/link';
 import AppLogo from '@/components/ui/AppLogo';
 import { Bell, CheckCircle, Calendar, CreditCard, Star, AlertCircle, MessageSquare, ArrowLeft, Check, Trash2 } from 'lucide-react';
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 interface Notification {
   id: string;

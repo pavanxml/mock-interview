@@ -9,7 +9,7 @@ interface StudentRegisterFormProps {
   onSwitchToLogin: () => void;
 }
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 interface RegisterValues {
   fullName: string;

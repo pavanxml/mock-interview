@@ -6,7 +6,7 @@ import { Calendar, Clock, CheckCircle, XCircle, Video, Star, TrendingUp, Wallet,
 import Icon from '@/components/ui/AppIcon';
 
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];

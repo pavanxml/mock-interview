@@ -6,7 +6,7 @@ import { Calendar, Clock, Video, Star, Download, ChevronRight, CheckCircle, Aler
 import Icon from '@/components/ui/AppIcon';
 
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 
 export type StudentTab = 'overview' | 'upcoming' | 'history' | 'feedback' | 'payments' | 'reviews' | 'profile';

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Bell, Check, Trash2 } from 'lucide-react';
 
-const API_BASE = '/api/v1';
+import { API_BASE } from '@/lib/api';
 
 type NotificationItem = {
   id: string;
